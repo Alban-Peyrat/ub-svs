@@ -3,10 +3,10 @@
 ## Procédure
 
 Dans un premier temps, copiez dans votre presse-papier les lignes de code en :
-* si vous utilisez Excel :
+* si vous utilisez [Excel](https://github.com/Alban-Peyrat/ub-svs/raw/main/dumas/dumas_specialite.xlsx) :
   * choisissant la spécialité avec le menu déroulant en `C5` (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur `Alt + flèche du bas`) ;
   * copiant la cellule `D5`.
-* si vous utilisez le site et que javascript (par défaut) est activé :
+* si vous utilisez [le site et que javascript (par défaut) est activé](https://alban-peyrat.github.io/outils/ub-svs/dumas.html) :
   * parcourez la liste ci-dessous et cliquez sur la spécialité voulue.
 * si vous utilisez GitHub ou le site sans javascript (ou que la méthode avec javascript a échoué) :
   * parcourez la liste et retenez le nombre associé ;
