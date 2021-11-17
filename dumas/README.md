@@ -22,8 +22,8 @@ Il vous sera peut-être nécessaire de coller à nouveau le contenu de votre pre
 
 ## Sélectionner un domaine
 
-* [Médecine générale](#medecinegenerale) ;
-* [Médecine spécialisée](#medecinespecialisee) ;
+* [Médecine générale](#medecine-generale) ;
+* [Médecine spécialisée](#medecine-specialisee) ;
 * [Pharmacie](#pharmacie) ;
 * [Odontologie](#odontologie).
 
