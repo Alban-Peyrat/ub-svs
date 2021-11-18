@@ -41,11 +41,11 @@ La liste des spécialités :
 * Anatomie et cytologie pathologiques : 196 ;
 * Anesthésie réanimation : 163 ;
 * Biologie médicale : 159 ;
-* Biologie médicale - Virologie : 159 (Virologie n'a pas d'index je crois);
+* Biologie médicale - Virologie (Virologie n'a pas d'index je crois) : 159 ;
 * Cardiologie et chirurgie vasculaire : 170 ;
 * Cardiologie et maladies vasculaires : 199 ;
 * Chirurgie générale  : 171 ;
-* Chirurgie orale : 44 (Chirurgie maxillo-faciale) ;
+* Chirurgie orale (Chirurgie maxillo-faciale) : 44 ;
 * Chirurgie orthopédique et traumatologique : 206 ;
 * Chirurgie thoracique et cardio-vasculaire : 208 ;
 * Chirurgie urologique : 209 ;
@@ -87,6 +87,7 @@ La liste des spécialités :
 Le code à copier : `document.getElementById("list_domain").innerHTML += '<li style="display: block" class="margin-top-5"><input type="hidden" value="sdv" name="domain[]"><span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="<span style=&quot;display: block; text-align: left; padding-left: 0px&quot;>Sciences du Vivant [q-bio]</span>"><i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"></i><span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;">Sciences du Vivant [q-bio]</span><button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"><i class="glyphicon glyphicon-trash"></i></button></span></li><li style="display: block" class="margin-top-5"><input type="hidden" value="sdv.mhep" name="domain[]"><span class="label label-primary" style="font-size: inherit; display: inline-block; text-align: justify; white-space: normal; padding: 0px; height: 20px;" data-html="true" data-toggle="tooltip" data-original-title="<span style=&quot;display: block; text-align: left; padding-left: 0px&quot;>Sciences du Vivant [q-bio]</span><span style=&quot;display: block; text-align: left; padding-left: 15px&quot;><i class=&quot;glyphicon glyphicon-share-alt&quot; style=&quot;transform: scaleY(-1);&quot;></i> Médecine humaine et pathologie</span>"><i style="border-radius: 0px; height: 20px; padding: 0px; margin: 0px 7px; top: 1px; bottom: 0px;" class="glyphicon glyphicon-move move" data-toggle="tooltip" data-original-title="Déplacer" data-placement="left"></i><span style="padding-top: 4px; padding-bottom: 0px; margin-top: 0px; height: 20px; display: inline-block;">Médecine humaine et pathologie</span><button style="height: 20px; padding-top: 0px; padding-bottom: 0px; margin-left: 10px; margin-top: -2px; margin-right: 0px; border: medium none ! important; padding-right: 6px;" class="btn btn-xs btn-primary" type="button" data-toggle="tooltip" data-original-title="Supprimer" data-placement="right"><i class="glyphicon glyphicon-trash"></i></button></span></li>';document.getElementById("dumas_degreeType").value = 13; document.getElementById("dumas_degreeSubject").value = 48; document.getElementById("dumas_degreeSpeciality").value = 5`
 
 La liste des spécialités :
+* Sans spécialité : del ;
 * Biologie médicale	: 159 ;
 * Industrie	: 844 ;
 * Industrie Recherche	: 790 ;
@@ -98,7 +99,6 @@ La liste des spécialités :
 * Pharmacie hospitalière et des collectivités	: 160 ;
 * Sciences Pharmaceutiques	: 592 ;
 * Toxicologie	: 774.
-
 
 ### Odontologie
 
