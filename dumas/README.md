@@ -2,16 +2,19 @@
 
 ## Procédure
 
-Dans un premier temps, copiez dans votre presse-papier les lignes de code en :
+Dans un premier temps, copiez dans votre presse-papier les lignes de code :
+* si vous utilisez [le site et que javascript (par défaut) est activé](https://alban-peyrat.github.io/outils/ub-svs/dumas.html) :
+  * `médecine spécialisée` et `pharmacie` : parcourez la liste ci-dessous et cliquez sur la spécialité voulue.
+Si vous cliquez sur le code, vous le copierez avec la spécialité par défaut (`Sociétés et économies des mondes modernes et contemporains`) ;
+  * `médecine générale` et `odontologie` : cliquez sur le code ;
 * si vous utilisez [Excel](https://github.com/Alban-Peyrat/ub-svs/raw/main/dumas/dumas_specialite.xlsx) :
-  * choisissant la spécialité avec le menu déroulant en `C5` (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur `Alt + flèche du bas`) ;
-  * copiant la cellule `D5`.
-* (PAS ENCORE IMPLENTÉ) si vous utilisez [le site et que javascript (par défaut) est activé](https://alban-peyrat.github.io/outils/ub-svs/dumas.html) :
-  * parcourez la liste ci-dessous et cliquez sur la spécialité voulue.
+  * choisissez le domaine avec le menu déroulant en `C3` (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur `Alt + flèche du bas`) ;
+  * `médeciné spécialisée` et `pharmacie` choisissez la spécialité avec le menu déroulant en `C5` (méd spé) ou `C6` (pharma) (cliquez sur la flèche en bas à droite de la cellule ou appuyer sur `Alt + flèche du bas`) ;
+  * copiez la cellule `D5`.
 * si vous utilisez GitHub ou le site sans javascript (ou que la méthode avec javascript a échoué) :
   * parcourez la liste et retenez le nombre associé ;
   * copiez les lignes de code situées au début de la partie dédiée ;
-  * lorsque durant la suite de la procédure vous collerez ce code, changez le `5` final par le nombre associé à la spécialité ;
+  * lorsque vous collerez le code plus tard dans la procédure, changez le `5` final par le nombre associé à la spécialité ;
 
 La suite de la prodécure est assez simple, en 4 étapes généralement :
 * sur l'onglet du dépôt, allumez la console de votre navigateur (si vous utilisez Firefox, appuyez simultanément sur `Alt + Maj + K`) ;
