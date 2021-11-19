@@ -1,4 +1,10 @@
-# Dumas
+# Aide pour le dépôt de thèses d'exercice dans Dumas
+
+_Les champs actuellement importés sont :_
+* _le type de mémoire ;_
+* _le domaine de formation ;_
+* _la spécialité (si requise) ;_
+* _le domaine HAL._
 
 ## Procédure
 
