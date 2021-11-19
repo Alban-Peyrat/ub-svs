@@ -1,4 +1,4 @@
-# Aide pour le dépôt de thèses d'exercice dans Dumas
+# Aide pour le dépôt de thèses d'exercice dans DUMAS
 
 _Les champs actuellement importés sont :_
 * _le type de mémoire ;_
