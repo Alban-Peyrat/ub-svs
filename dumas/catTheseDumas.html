@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alban Peyrat - Générateur de notice bibliographique d'une thèse d'exercice déposée sur DUMAS (BU SVS)</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="https://alban-peyrat.github.io/ico_logo_AP.png"/>
+    <link rel="stylesheet" href="https://alban-peyrat.github.io/gh-pages.css"/>
+</head>
+<body>
+<input type="text" id="inputURL" placeholder="Collez l'adresse DUMAS de la thèse" style="color:black;">
+<button id="generate" style="color:black;">Générer la notice</button>
+<!-- <label><input id="enhanced606" type="checkbox">Chercher PPN sujet RAMEAU</input></label>
+<label><input id="enhancedAut" type="checkbox">Chercher PPN auteur(s)</input></label>
+<label><input id="enhancedDir" type="checkbox">Chercher PPN directeur(s) de thsèe</input></label> -->
+<input id="enhanced606" type="checkbox"><label for="enhanced606">Chercher PPN sujet RAMEAU</label>
+<input id="enhancedAut" type="checkbox"><label for="enhancedAut">Chercher PPN auteur(s)</label>
+<input id="enhancedDir" type="checkbox"><label for="enhancedDir">Chercher PPN directeur(s) de thsèe</label>
+<div id="notice">
+</div>
+</body>
+<script>
+var notice = "";
+var dumasIndexJson;
+var annee, domaine, domaineCode, codeType, specialite, codeSpe;
+
+document.getElementById("generate").onclick = function() {
+    let inputURL = document.getElementById("inputURL").value.trim();
+    let docId = inputURL.substring(inputURL.length - 8);
+    main(docId);
+}
+
+//Charge le JSON contenant les index DUMAS
+//Source originale : https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript [23/11/2021]
+function loadDumasJson(callback) {   
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open("GET", "https://alban-peyrat.github.io/outils/ub-svs/dumas/dumas_indexes.json", true); // Replace "my_data" with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+        // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);  
+}
+loadDumasJson(function(response) {dumasIndexJson = JSON.parse(response)});
+
+
+function main(docId){
+
+    const URLThese = "https://api.archives-ouvertes.fr/search/dumas/?q=docid:"+docId+"&wt=json&fl=language_s,title_s,authFirstName_s,authLastName_s,uri_s,director_s,keyword_s,uri_s,abstract_s,page_s,dumas_degreeSpeciality_s,publicationDateY_i,dumas_degreeType_s";
+
+//Accède au JSON
+//Source originale : https://zetcode.com/javascript/jsonurl/ [22/11/2021]
+    var getJSON = function(url, callback) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "json";
+
+        xhr.onload = function() {
+
+            var status = xhr.status;
+
+            if (status == 200) {
+                callback(null, xhr.response);
+            } else {
+                callback(status);
+            }
+        };
+
+        xhr.send();
+    };
+
+    getJSON(URLThese,  function(err, data) {
+
+        if (err != null) {
+            console.error(err);
+        } else {
+            analyseJSON(data);
+        }
+    });
+
+    function titleToUNM(title){
+//Ajoute le @
+        if(title.substring(0, 6) === "De la "){
+            title = title.substring(0, 6) + "@" + title.substring(6);
+        }else if(title.substring(0, 5) === "De l'"){
+            title = title.substring(0, 5) + "@" + title.substring(5);
+        }else if(title.substring(0, 4) === ("Les " || "Des " || "Une " || "The ")){
+            title = title.substring(0, 4) + "@" + title.substring(4);
+        }else if(title.substring(0, 3) === ("Le " || "La " || "Un " || "An " || "De " || "Du ")){
+            title = title.substring(0, 3) + "@" + title.substring(3);
+        }else if(title.substring(0, 2) === ("A " || "L'" || "D'")){
+            title = title.substring(0, 2) + "@" + title.substring(2);
+        }else{
+            title = "@" + title;
+        }
+
+//Ajoute les $e
+        //marche pas sur IE
+        //title = title.replaceAll(" : ", "$e");
+        //title = title.replaceAll(": ", "$e");
+        title = title.replace(/( : )/g, "$e");
+        title = title.replace(/(: )/g, "$e");
+
+//Return
+        return title;
+    };
+
+    function langToCoded(lang){
+        switch (lang){
+            case "fr":
+                return "fre";
+                break;
+            case "en":
+                return "eng"
+                break;
+            default:
+                return "fre"
+        };
+    }
+
+    function specialityCodeToUNM(){
+        const degreeSpe = dumasIndexJson.dumasIndexes.dumas_degreeSpeciality;
+        //find marche pas sur IE aaaaaaaaah
+        //let selectedSpe = degreeSpe.find(function(type){return type.degreeSpecialityCode === codeSpe});
+        //Source https://dustinpfister.github.io/2021/07/19/js-array-find/
+        let selectedSpe = degreeSpe.filter(function(type){return type.degreeSpecialityCode === codeSpe});
+        let speName = selectedSpe[0].degreeSpecialityName;
+        
+        specialite = "";
+        switch (codeType) {
+            case "30":
+                domaine = "Chirurgie dentaire";
+                domaineCode = "O";
+                break;
+            case "12":
+                if(codeSpe === "150"){
+                    domaine = "Médecine générale";
+                    domaineCode = "M";
+                }else{
+                    domaine = "Médecine. ";
+                    domaineCode = "3";
+                    specialite = speName;
+                }
+                
+                break;
+            case "13":
+                domaine = "Pharmacie";
+                domaineCode = "P"
+                if(codeSpe !== "empty"){
+                    specialite = ". " + speName;
+                };                
+                break;
+            default:
+                domaineCode = "?";
+                domaine = ";_;ERREUR-001;_;";
+        };
+    }
+
+
+    function analyseJSON(data){
+        if(typeof data === "string"){
+            data = JSON.parse(data);
+        }
+        let doc = data.response.docs[0];
+        let enhanced606 = document.getElementById("enhanced606").checked;
+        let enhancedAut = document.getElementById("enhancedAut").checked;
+        let enhancedDir = document.getElementById("enhancedDir").checked;
+//-------------------- Données codées --------------------
+        notice = "008 $aOax3\n";
+//NNT
+        if(doc.hasOwnProperty("publicationDateY_i") === true){
+            annee = doc.publicationDateY_i;
+        }else{
+            annee = ";_;ERREUR-002;_;";
+        };
+        if(doc.hasOwnProperty("dumas_degreeSpeciality_s") === true){
+            codeSpe = doc.dumas_degreeSpeciality_s[0];
+        }else{
+            codeSpe = "empty";
+        };
+        if(doc.hasOwnProperty("dumas_degreeType_s") === true){
+            codeType = doc.dumas_degreeType_s[0];
+        }else{
+            codeType = ";_;ERREUR-003;_;";
+        };
+        specialityCodeToUNM();
+        notice += "_MOD_029 ##$aFR$b"+annee+"BORD"+domaineCode+"XXX\n";
+
+        notice += "100 0#$a"+annee+"\n";
+
+//Langue 101
+        let langue = langToCoded(doc.language_s[0]);
+        notice += "101 0#$a"+langue+"$c"+langue+"$d"+langue+"$g"+langue+"\n";
+
+        notice += "102 ##$aFR\n";
+        notice += "104 ##$ak$by$cy$dba$e0$ffre\n";
+        notice += "105 ##$ay$bm$ba$c0$d0$e0$fy$gy\n";
+        notice += "135 ##$ad$br\n";
+        notice += "181 ##$P01$ctxt\n";
+        notice += "182 ##$P01$cc\n";
+        notice += "183 ##$P01$aceb\n";
+//-------------------- 2XX --------------------
+//Titre 200
+        notice += "_VER_200 1#$a" + titleToUNM(doc.title_s[0]);
+
+//Auteur 200
+        if(doc.authFirstName_s.length > 1){
+            notice += "$f" + doc.authFirstName_s[0] + " " + doc.authLastName_s[0]
+        }else{
+            notice += "$f" + doc.authFirstName_s[0] + " " + doc.authLastName_s[0]
+        }
+
+//Directeur de thèse 200
+        notice += "$gsous la direction de " + doc.director_s[0] + "\n";
+
+//Année de publication 214
+        notice += "214 #1$a" + annee + "\n";
+
+        notice += "230 ##$aDonnées textuelles\n";
+
+//-------------------- 3XX --------------------
+        notice += "303 ##$aL'impression du document génère "+doc.page_s+" f.\n";
+        notice += "_MOD_310 ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE\n";
+        notice += "_MOD_320 ##$aBibliogr. XX réf. Annexes\n";
+        notice += "328 #0$bThèse d'exercice$c"+domaine+specialite+"$eBordeaux$d"+annee+"\n";
+
+//Résumés 330
+        for (let ii = 0; ii < doc.abstract_s.length; ii++){
+        notice += "330 ##$a"+doc.abstract_s[ii]+"\n";
+        }
+
+//-------------------- 4XX - 5XX - 6XX --------------------
+//Titre anglais
+        if(doc.title_s.length > 0){
+            notice += "541 ##$a" + titleToUNM(doc.title_s[1])+"$zeng\n";
+        }
+
+//Sujets
+        for(let ii = 0; ii < doc.keyword_s.length; ii++){
+        notice += "_DEL_610 0#$a" + doc.keyword_s[ii]+"\n";
+        }
+
+        notice += "608 ##$3027253139$2rameau\n"
+
+//-------------------- 7XX - 8XX --------------------
+//auteurs 70X $4070
+        for(let ii = 0; ii < doc.authLastName_s.length; ii++){
+        notice += "700 #1$a" + doc.authLastName_s[ii]+"$b" + doc.authFirstName_s[ii]+"$4070\n";
+        }
+
+//Directeur de thèse
+        for(let ii = 0; ii < doc.director_s.length; ii++){
+            notice += "701 #1$a" + doc.director_s[ii]+"$4727\n";
+        }
+
+        notice += "711 02$3175206562$4295\n"
+        notice += "856 4#$qPDF$u"+doc.uri_s+"$2Accès au texte intégral"
+
+//Output
+        document.getElementById("notice").innerText = notice;
+    }
+
+
+};
+
+
+
+</script>
+</html>
