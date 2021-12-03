@@ -1,6 +1,6 @@
 Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc
 
-_Je travaille encore sur le projet_
+_Je travaille encore sur le projet. Fonctionnement à jour de la version 2.0, mais pas la documentation sur le fonctionnement_
 
 ## Récupérer les données
 
@@ -21,7 +21,8 @@ _Je travaille encore sur le projet_
   * les titres du document (`title_s`) ;
   * les mots-clefs renseignés (`keyword_s`) ;
   * les résumés renseignés (`abstract_s`) ;
-  * le nombre de page (`page_s`).
+  * le nombre de page (`page_s`) ;
+  * le document est en Open Access (`openAccess_bool`).
 
 ## Transformer les données en UNIMARC
 
@@ -59,7 +60,7 @@ Voici maintenant les informations basiques sur ce générateur.
 Il ne prend en compte les 8 derniers caractères (espaces exclus) de ce qui est lui est entré dans le champ de saisie (ce qui supposément correspond à l'identifiant DUMAS `docId`).
 Voilà les champs créés par le générateur :
 * 008 : `008 $aOax3`
-* 029 : `_MOD_029 ##$aFR$b` + l'année + `BORD` + `M`, `3`, `P` ou `O` selon le type de mémoire et la spécialité + `XXX` à modifier manuellement en le numéro de la thèse
+* 029 : `029 MOD ##$aFR$b` + l'année + `BORD` + `M`, `3`, `P` ou `O` selon le type de mémoire et la spécialité + `XXX` à modifier manuellement en le numéro de la thèse
 * 100 : `100 0#$a` + l'année
 * 101 : `101 0#$a`, `$c`, `$d`, `$g` avec la langue du document
 * 102 : `102 ##$aFR`
@@ -69,16 +70,18 @@ Voilà les champs créés par le générateur :
 * 181 : `181 ##$P01$ctxt`
 * 182 : `182 ##$P01$cc`
 * 183 : `183 ##$P01$aceb`
-* 200 : `_VER_200 1#$a` + le 1er titre renvoyé avec les `:` (espaces avant et après, espaces parès) remplacés en `$e` et le `@` placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + `$f` + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + `$gsous la direction de ` + le premier directeur de thèse renvoyé
+* 200 : `200 VER 1#$a` + le 1er titre renvoyé avec les `:` (espaces avant et après, espaces parès) remplacés en `$e` et le `@` placé en début de titre sauf si présence d'un article rejeté, auquel cas, il est placé après l'article + `$f` + premier prénom renvoyé suivi d'un espace suivi du premier nom renvoyé + `$gsous la direction de ` + le premier directeur de thèse renvoyé
 * 214 : `214 #1$a` + l'année
 * 230 : `230 ##$aDonnées textuelles`
 * 303 : `303 ##$aL'impression du document génère` + le nombre de page entouré d'espace + `f.`
-* 310 : `_MOD_310 ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE` à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)
-* 320 : `_MOD_320 ##$aBibliogr. XX réf. Annexes` à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas
+* 304 : `304 ##$aTitre provenant de l'écran-titre`
+* 310 : `310 MOD ##$aThèse sous embargo jusqu'au JOUR/MOIS/ANNÉE` à modifier manuellement ou supprimer (le champ n'existe pas à ma connaissance dans le l'API)
+* 320 : `320 MOD ##$aBibliogr. XX réf. Annexes` à modifier manuellement le nombre de références et supprimer les annexes s'il n'y en a pas
 * 328 : `328 #0$bThèse d'exercice$c` + domaine + spécialité si indiquée + `$eBordeaux$d` + l'année
 * 330 : `330 ##$a` + résumé (pour chaque résumé entré)
+* 337 : `337 ##$aConfiguration requise : un logiciel capable de lire un fichier au format : application/pdf`
 * 541 : `541 ##$a` + le 2e titre renvoyé (même changements que celui en 200) + `$zeng`
-* 610 : `_DEL_610 0#$a` + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606
+* 610 : `610 DEL 0#$a` + mot-clef (pour chaque mot-clef, quelle que soit la langue). Substitut temporaire à la 606
 * 608 : `608 ##$3027253139$2rameau`
 * 700 : `700 #1$a` + nom de l'auteur + `$b` + prénom de l'auteur + `$4070` (pour chaque auteur renvoyé).
 Attention, écrit une __700__ même s'il y a plusieurs auteurs
@@ -87,6 +90,9 @@ Attention, écrit une __700__ même s'il y a plusieurs auteurs
 * 856 : `856 4#$qPDF$u` + l'URI du document renvoyé + `$2Accès au texte intégral`
 
 ## Importer ces données dans WinIBW
+
+__À l'heure actuelle, il est nécessaire d'utiliser son navigateur puis de copier la notice en cliquant dessus et la coller dans WinIBW.__
+Il est ensuite conseillé de lancer le script `delEspaceB4Tag` (code disponible ci-dessous).
 
 À l'heure actuelle, je passe par [le générateur en javascript que j'avais déjà créé](https://alban-peyrat.github.io/outils/ub-svs/dumas/generateur-notice.html) pour importer les données dans WinIBW.
 En effet, à l'aide [du code source du script utilisateur IdRef développé par l'Abes](https://github.com/abes-esr/winibw-scripts/blob/master/user-scripts/idref/IdRef.vbs), j'ai réussi à me connecter à mon générateur et lancer les scripts internes à celui-ci.
@@ -97,6 +103,20 @@ Aussi, la procédure que l'utilisateur doit faire une fois [le script dans WinIB
 * vérifier et compléter la notice générée.
 
 ## Code du script WinIBW
+
+__Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.__
+Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :
+```
+sub delEspaceB4Tag()
+  dim notice
+  application.activeWindow.title.selectAll
+  notice = application.activeWindow.title.selection
+  While(InStr(notice, chr(10) & " ") > 0)
+    notice = replace(notice, chr(10) & " ", chr(10))
+  Wend
+  application.activeWindow.title.insertText notice
+End Sub
+```
 
 _Version du 25/11/2021, non définitive_
 
@@ -228,6 +248,11 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
     LIMIT 100
   }
 }`
+* URI Wikidata associée à l'Université de Bordeaux (en JSON) : `https://www.wikidata.org/wiki/Special:EntityData/Q13344.json`.
+Accès au PPN IdRef à partir de là : `entities.Q13344.claims.P269[0].mainsnak.datavalue.value`
+* Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : `https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&wt=json&fl=ppn_z,nom_s,prenom_s,affcourt_z` ;
+* Chercher s'il existe des autorités pour le sujet Urgences en pédiatrie : `https://www.idref.fr/Sru/Solr?q=subjectheading_t:(urgence*%20AND%20pediatr*)%20AND%20recordtype_z:r&wt=json&fl=ppn_z,subjectheading_s` ;
+
 
 ## Liste des erreurs
 
@@ -237,6 +262,17 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
 Peut être causée par une mauvais entrée des données dans DUMAS ou une réécriture de la variable dans le code avant cette vérification (ce qui ne devrait pas avoir lieu) ;
 * `002` : le résultat renvoyé par l'API ne contient pas la propriété `publicationDateY_i` ;
 * `003` : le résultat renvoyé par l'API ne contient pas la propriété `dumas_degreeType_s` ;
+* `004` : le résultat renvoyé par l'API ne contient pas la propriété `language_s` ;
+* `005` : le résultat renvoyé par l'API ne contient pas la propriété `abstract_s` ;
+* `006` : le résultat renvoyé par l'API ne contient pas la propriété `page_s` ;
+* `007` : le résultat renvoyé par l'API ne contient pas la propriété `openAccess_bool` ;
+* `008` : le résultat renvoyé par l'API ne contient pas la propriété `uri_s` ;
+* `009` : le résultat renvoyé par l'API ne contient pas la propriété `keyword_s` ;
+* `010` : le résultat renvoyé par l'API ne contient pas la propriété `title_s` ;
+* `011` : le résultat renvoyé par l'API ne contient pas la propriété `authStructId_i` ;
+* `012` : le résultat renvoyé par l'API ne contient pas la propriété `authLastName_s` ;
+* `013` : le résultat renvoyé par l'API ne contient pas la propriété `authFirstName_s` associé au numéro `authLastName_s` en cours de traitement ;
+* `014` : le résultat renvoyé par l'API ne contient pas la propriété `director_s` ;
 
 ### Erreurs invisibles (commencent par #)
 
