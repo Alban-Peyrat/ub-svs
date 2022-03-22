@@ -1,4 +1,4 @@
-# Documentation du générateur de notice UNIAMRC d'une thèse d'exercice déposée sur DUMAS 
+# Documentation du générateur de notice UNIMARC d'une thèse d'exercice déposée sur DUMAS (BU SVS)
 
 Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc
 
