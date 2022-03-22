@@ -1,0 +1,17 @@
+{"generateurErreurs":
+    {"ERREUR-001": "la première propriété dumas_degreeType_s existante est différente de 12, 13 ou 30",
+    "ERREUR-002": "le résultat renvoyé par l'API ne contient pas la propriété publicationDateY_i",
+    "ERREUR-003": "le résultat renvoyé par l'API ne contient pas la propriété dumas_degreeType_s",
+    "ERREUR-004": "le résultat renvoyé par l'API ne contient pas la propriété language_s",
+    "ERREUR-005": "le résultat renvoyé par l'API ne contient pas la propriété abstract_s",
+    "ERREUR-006": "le résultat renvoyé par l'API ne contient pas la propriété page_s",
+    "ERREUR-007": "le résultat renvoyé par l'API ne contient pas la propriété openAccess_bool",
+    "ERREUR-008": "le résultat renvoyé par l'API ne contient pas la propriété uri_s",
+    "ERREUR-009": "le résultat renvoyé par l'API ne contient pas la propriété keyword_s",
+    "ERREUR-010": "le résultat renvoyé par l'API ne contient pas la propriété title_s",
+    "ERREUR-011": "le résultat renvoyé par l'API ne contient pas la propriété authStructId_i",
+    "ERREUR-012": "le résultat renvoyé par l'API ne contient pas la propriété authLastName_s",
+    "ERREUR-013": "le résultat renvoyé par l'API ne contient pas la propriété authFirstName_s associé au numéro authLastName_s en cours de traitement",
+    "ERREUR-014": "le résultat renvoyé par l'API ne contient pas la propriété director_s",
+    "ERREUR-#99": "en implémentation"}
+}
