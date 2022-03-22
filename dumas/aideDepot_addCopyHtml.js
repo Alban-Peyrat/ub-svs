@@ -1,6 +1,6 @@
 window.addEventListener('load', function() {
-const medSpeTitle = document.getElementById("mdecinespcialise");
-const medGeTitle = document.getElementById("mdecinegnrale");
+const medSpeTitle = document.getElementById("medecine-specialisee");
+const medGeTitle = document.getElementById("medecine-generale");
 const pharTitle = document.getElementById("pharmacie");
 const odonTitle = document.getElementById("odontologie");
 
