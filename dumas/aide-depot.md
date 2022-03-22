@@ -9,7 +9,7 @@ _Les champs actuellement importés sont :_
 ## Procédure
 
 Dans un premier temps, copiez dans votre presse-papier les lignes de code :
-* si vous utilisez [le site et que javascript (par défaut) est activé](https://alban-peyrat.github.io/outils/ub-svs/dumas.html) :
+* si vous utilisez [le site et que javascript (par défaut) est activé](https://alban-peyrat.github.io/outils/ub-svs/dumas/aide-depot.html) :
   * `médecine spécialisée` et `pharmacie` : parcourez la liste ci-dessous et cliquez sur la spécialité voulue.
 Si vous cliquez sur le code, vous le copierez avec la spécialité par défaut (`Sociétés et économies des mondes modernes et contemporains`) ;
   * `médecine générale` et `odontologie` : cliquez sur le code ;
