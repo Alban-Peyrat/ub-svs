@@ -6,7 +6,7 @@ Ci-dessous, des liens vers ces outils ou d'autres outils utiles pour les collèg
 
 ## Bookmarklet
 
-[Voir le dépôt (dans un autre dépôt GitHub)](https://github.com/Alban-Peyrat/bookmarklet)
+[Voir le dépôt contenant les bookmarklets](/../../../bookmarklet)
 
 ## Dumas
 
@@ -14,4 +14,4 @@ Ci-dessous, des liens vers ces outils ou d'autres outils utiles pour les collèg
 
 ## WinIBW
 
-[Voir le dépôt contenant les scripts WinIBW](https://github.com/Alban-Peyrat/WinIBW)
+[Voir le dépôt contenant les scripts WinIBW](/../../../WinIBW)
