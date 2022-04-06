@@ -110,7 +110,8 @@ Aussi, la procédure que l'utilisateur doit faire une fois [le script dans WinIB
 
 __Le code ne fonctionne pas sur Internet Explorer pour le moment, il est donc impossible de directement importer la notice dans WinIBW.__
 Il est fortement recommandé d'utiliser ce court script après avoir collé la notice afin de supprime les espaces en trop :
-```
+
+``` VBScript
 sub delEspaceB4Tag()
   dim notice
   application.activeWindow.title.selectAll
@@ -124,7 +125,7 @@ End Sub
 
 _Version du 25/11/2021, non définitive_
 
-```
+``` VBScript
 Sub these_catDumas()
 dim docId
   docId = application.activeWindow.clipboard
@@ -242,7 +243,8 @@ Dans ce même fichier, indiquer le code court de l'université grâce [à la tab
 Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer le code final s'il existe une manière de faire, sinon Bordeaux restera le seul à générer ce code ;
 * [Assistant de requêtes Wikidata](https://query.wikidata.org/querybuilder/?uselang=fr) ;
 * requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :
-`SELECT DISTINCT ?item ?itemLabel WHERE {
+``` SPARQL
+SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
   {
     SELECT DISTINCT ?item WHERE {
@@ -251,7 +253,8 @@ Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer l
     }
     LIMIT 100
   }
-}`
+}
+```
 * URI Wikidata associée à l'Université de Bordeaux (en JSON) : `https://www.wikidata.org/wiki/Special:EntityData/Q13344.json`.
 Accès au PPN IdRef à partir de là : `entities.Q13344.claims.P269[0].mainsnak.datavalue.value`
 * Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : `https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&wt=json&fl=ppn_z,nom_s,prenom_s,affcourt_z` ;
