@@ -243,6 +243,7 @@ Dans ce même fichier, indiquer le code court de l'université grâce [à la tab
 Dans ce même fichier, il faudra manuellement indiquer la manière d'attribuer le code final s'il existe une manière de faire, sinon Bordeaux restera le seul à générer ce code ;
 * [Assistant de requêtes Wikidata](https://query.wikidata.org/querybuilder/?uselang=fr) ;
 * requête pour récupérer l'identifiant Wikidata de l'Université de Bordeaux :
+
 ``` SPARQL
 SELECT DISTINCT ?item ?itemLabel WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
@@ -255,6 +256,7 @@ SELECT DISTINCT ?item ?itemLabel WHERE {
   }
 }
 ```
+
 * URI Wikidata associée à l'Université de Bordeaux (en JSON) : `https://www.wikidata.org/wiki/Special:EntityData/Q13344.json`.
 Accès au PPN IdRef à partir de là : `entities.Q13344.claims.P269[0].mainsnak.datavalue.value`
 * Chercher s'il existe des autorités pour la personne Jean-Claude Moissinac : `https://www.idref.fr/Sru/Solr?q=nom_s:moissinac%20AND%20prenom_s:jean-claude%20AND%20recordtype_z:a&wt=json&fl=ppn_z,nom_s,prenom_s,affcourt_z` ;
