@@ -1,5 +1,7 @@
 # Aide pour le dépôt de thèses d'exercice dans DUMAS
 
+__Cette aide n'est plus maintenue puisque remplacée par [les bookmarklet pour DUMAS](/../../../bookmarklet#dumas)__
+
 _Les champs actuellement importés sont :_
 * _le type de mémoire ;_
 * _le domaine de formation ;_
