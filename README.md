@@ -12,6 +12,10 @@ Ci-dessous, des liens vers ces outils ou d'autres outils utiles pour les collèg
 
 [Voir le dépôt contenant les outils en rapport avec DUMAS](dumas).
 
+## OpenRefine
+
+[Voir le dépôt contenant les traitements sur OpenRefine](/../../../Traitements_OpenRefine)
+
 ## WinIBW
 
 [Voir le dépôt contenant les scripts WinIBW](/../../../WinIBW)
