@@ -1,6 +1,6 @@
 # Documentation du générateur de notice UNIMARC d'une thèse d'exercice déposée sur DUMAS (BU SVS)
 
-Preuve de concept : catalogage semi-automatisé d'un document DUMAS dans le Sudoc
+__[Voir le projet de création de notices UNIMARC à partir d'une base externe (contient la version 3 théorique du générateur)](/../../../WinIBW/tree/main/imp2Win.md)__
 
 __Suite à l'Actu des réseaux n°75 de décembre 2021 et de la présentation du [webservice Marcxml2tei](http://documentation.abes.fr/sudoc/manuels/administration/aidewebservices/co/MarcXml2tei.html#OXiP0XaqCYhdbukhutyQif), cet outil semble ne plus être nécessaire.__
 
